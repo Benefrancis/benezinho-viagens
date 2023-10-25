@@ -12,28 +12,55 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-
+@Entity
+@Table(name = "TB_VIAGEM")
 public class Viagem {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_VIAGEM")
+    @SequenceGenerator(name = "SQ_VIAGEM", sequenceName = "SQ_VIAGEM", allocationSize = 1, initialValue = 1)
+    @Column(name = "ID_VIAGEM")
     private Long id;
 
-
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(
+            name = "CLIENTE",
+            referencedColumnName = "ID_PESSOA",
+            foreignKey = @ForeignKey(name = "FK_TB_VIAGEM_CLIENTE")
+    )
     private Pessoa cliente;
 
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "TB_VIAGEM_TRANSPORTAVEL",
+            joinColumns = {
+                    @JoinColumn(
+                            name = "VIAGEM",
+                            referencedColumnName = "ID_VIAGEM",
+                            foreignKey = @ForeignKey(name = "FK_TB_VIAGEM_VIAGEM")
+                    )
+            },
+            inverseJoinColumns = {
+
+                    @JoinColumn(
+                            name = "TRANSPORTAVEL",
+                            referencedColumnName = "ID_TRANSPORTAVEL",
+                            foreignKey = @ForeignKey(name = "FK_TB_VIAGEM_TRANSPORTAVEL")
+                    )
+            }
+    )
     private Set<Transportavel> transportaveis = new LinkedHashSet<>();
 
     private String origem;
 
     private String destino;
 
-
+    @Column(name = "DT_SAIDA")
     private LocalDateTime saida;
 
-
+    @Column(name = "DT_CHEGADA")
     private LocalDateTime chegada;
-
 
     public Viagem() {
     }
@@ -94,18 +121,6 @@ public class Viagem {
         return this;
     }
 
-    public Endereco getOrigem() {
-        var service = EnderecoService.build(Main.PERSISTENCE_UNIT);
-        return service.findByCEP(origem);
-    }
-
-
-    public Endereco getDestino() {
-        var service = EnderecoService.build(Main.PERSISTENCE_UNIT);
-        return service.findByCEP(destino);
-    }
-
-
     public Viagem setOrigem(String origem) {
         this.origem = origem;
         return this;
@@ -115,6 +130,17 @@ public class Viagem {
     public Viagem setDestino(String destino) {
         this.destino = destino;
         return this;
+    }
+
+    public Endereco getOrigem() {
+        var service = EnderecoService.build(Main.PERSISTENCE_UNIT);
+        return service.findByCEP(origem);
+    }
+
+
+    public Endereco getDestino() {
+        var service = EnderecoService.build(Main.PERSISTENCE_UNIT);
+        return service.findByCEP(destino);
     }
 
     public LocalDateTime getSaida() {

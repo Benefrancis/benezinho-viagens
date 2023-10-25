@@ -4,10 +4,20 @@ import br.com.fiap.infra.security.entity.PessoaFisica;
 import jakarta.persistence.*;
 
 
-
+@Entity
+@Table(name = "TB_PASSAGEIRO")
+@DiscriminatorValue("PASSAGEIRO")
 public class Passageiro extends Transportavel {
 
-      private PessoaFisica pessoa;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @JoinColumn(
+            name = "PESSOA",
+            referencedColumnName = "ID_PESSOA",
+            foreignKey = @ForeignKey(
+                    name = "FK_TB_PASSAGEIRO_PESSOA"
+            )
+    )
+    private PessoaFisica pessoa;
 
     public Passageiro() {
         super(null, "PASSAGEIRO");
