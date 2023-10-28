@@ -47,7 +47,7 @@ Na sprint atual, você foi incumbido de fazer:
 
 **Faça o Fork do projeto no github do professor :**
 
-https://github.com/Benefrancis/viagem-benezinho.git
+https://github.com/Benefrancis/benezinho-viagens.git
 
 Caso o github esteja indisponível, você deverá pegar o projeto no diretório compartilhado.
 
@@ -93,7 +93,7 @@ A correção da prova será disponibilizada no github do professor (branch corre
 Para acessar digite no prompt:
 
 ```shell
-git clone https://github.com/Benefrancis/viagem-benezinho.git && cd javapet && git checkout correcao
+git clone https://github.com/Benefrancis/benezinho-viagens.git && cd javapet && git checkout correcao
 ```
 
 A atividade é em dupla, em caso de fraude de qualquer tipo todos os envolvidos receberão nota ZERO.
