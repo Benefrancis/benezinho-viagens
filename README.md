@@ -85,7 +85,7 @@ Alterar o arquivo contido em documentacao/equipe.txt para incluir os RMs e nomes
 
 <a id="_JPA"></a>
 
-# Mapa de Mapeamento
+# Mapa de Persistência
 
 <img src="documentacao/diagrama/jpa/jpa.png">
 
