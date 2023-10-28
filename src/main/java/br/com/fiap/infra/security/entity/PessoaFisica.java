@@ -22,8 +22,8 @@ public class PessoaFisica extends Pessoa { //
     public PessoaFisica() {
     }
 
-    public PessoaFisica(Long id, String nome, LocalDate nascimento, String email, String password, String etiqueta, String cpf, Sexo sexo) {
-        super(id, nome, nascimento, email, password);
+    public PessoaFisica(Long id, String nome, LocalDate nascimento, String email, String password,  String cpf, Sexo sexo) {
+        super(id, nome, nascimento, email);
         this.cpf = cpf;
         this.sexo = sexo;
     }
