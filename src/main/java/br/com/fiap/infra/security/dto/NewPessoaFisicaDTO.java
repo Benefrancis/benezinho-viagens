@@ -2,8 +2,10 @@ package br.com.fiap.infra.security.dto;
 
 
 import br.com.fiap.Main;
+import br.com.fiap.infra.configuration.criptografia.Password;
 import br.com.fiap.infra.security.entity.PessoaFisica;
 import br.com.fiap.infra.security.entity.Sexo;
+import br.com.fiap.infra.security.entity.Usuario;
 import br.com.fiap.infra.security.service.PessoaFisicaService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.PastOrPresent;
@@ -20,31 +22,36 @@ public record NewPessoaFisicaDTO(
         String cpf,
         CredenciaisDTO credenciais
 ) {
-    private static PessoaFisicaService service = PessoaFisicaService.of(Main.PERSISTENCE_UNIT);
+    private static PessoaFisicaService service = PessoaFisicaService.of( Main.PERSISTENCE_UNIT );
 
     public static NewPessoaFisicaDTO of(PessoaFisica p) {
-        return new NewPessoaFisicaDTO(p.getId(), p.getNome(), p.getNascimento(), p.getEmail(), p.getSexo(), p.getCpf(), null);
+        return new NewPessoaFisicaDTO( p.getId(), p.getNome(), p.getNascimento(), p.getEmail(), p.getSexo(), p.getCpf(), null );
     }
 
     public static PessoaFisica of(NewPessoaFisicaDTO p) {
 
         PessoaFisica pessoa = null;
 
-        if (Objects.isNull(p)) return null;
+        if (Objects.isNull( p )) return null;
 
-        if (Objects.nonNull(p.id)) {
-            pessoa = service.findById(p.id());
+        if (Objects.nonNull( p.id )) {
+            pessoa = service.findById( p.id() );
             return pessoa;
         }
 
         pessoa = new PessoaFisica();
-        pessoa.setCpf(p.cpf);
-        pessoa.setSexo(p.sexo);
-        pessoa.setNome(p.nome);
-        pessoa.setNascimento(p.nascimento);
-        pessoa.setPassword(p.credenciais.password());
-        pessoa.setEmail(p.email);
+        pessoa.setCpf( p.cpf );
+        pessoa.setSexo( p.sexo );
+        pessoa.setNome( p.nome );
+        pessoa.setNascimento( p.nascimento );
+        pessoa.setEmail( p.email );
 
+        //   pessoa.setPassword(p.credenciais.password());
+        if (Objects.nonNull( p.credenciais )) {
+            Usuario usuario = new Usuario();
+            usuario.setUsername( p.credenciais.username() ).setPassword( Password.encoder( p.credenciais.password() ) );
+            pessoa.setUsuario( usuario );
+        }
         return pessoa;
     }
 

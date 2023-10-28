@@ -16,6 +16,10 @@
 
 [Diagrama de Classes ](#_Diagrama_de_Classes)
 
+[Diagrama de Entidades e Relacionamentos ](#_DER)
+
+[Mapa de Persistência ](#_PERSISTENCIA)
+
 [Correção ](#_Correcao)
 
 <a id="_Estudo_de_caso"></a>
@@ -66,6 +70,18 @@ Alterar o arquivo contido em documentacao/equipe.txt para incluir os RMs e nomes
 # Diagrama de Classes de Domínio
 
 <img src="documentacao/diagrama/uml/entity.png">
+
+<a id="_DER"></a>
+
+# Diagrama de Entidades e Relacionamentos
+
+<img src="documentacao/diagrama/DER/der.png">
+
+<a id="_PERSISTENCIA"></a>
+
+# Mapa de Persistência
+
+<img src="documentacao/database/mapa-persistencia.png">
 
 
 <a id="_Correcao"></a>

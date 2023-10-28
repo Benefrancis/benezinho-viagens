@@ -22,7 +22,6 @@ import java.util.Set;
 public record UsuarioDTO(
         Long id,
         @NotNull @Email String username,
-        PessoaDTO pessoa,
         String authorization,
         Set<Authority> authorities
 ) {
@@ -36,8 +35,8 @@ public record UsuarioDTO(
      * @return
      */
     public static UsuarioDTO of(Usuario p, String key) {
-        if (Objects.isNull(p)) return null;
-        return new UsuarioDTO(p.getId(), p.getUsername(), PessoaDTO.of(p.getPessoa()), key, p.getAuthorities());
+        if (Objects.isNull( p )) return null;
+        return new UsuarioDTO( p.getId(), p.getUsername(), key, p.getAuthorities() );
     }
 
     /**
@@ -47,13 +46,12 @@ public record UsuarioDTO(
      * @return
      */
     public static UsuarioDTO of(Usuario p) {
-        if (Objects.isNull(p)) return null;
+        if (Objects.isNull( p )) return null;
         return new UsuarioDTO(
                 p.getId(),
                 p.getUsername(),
-                PessoaDTO.of(p.getPessoa()),
                 null,
-                p.getAuthorities());
+                p.getAuthorities() );
     }
 
 

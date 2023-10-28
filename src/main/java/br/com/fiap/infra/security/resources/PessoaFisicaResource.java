@@ -54,7 +54,7 @@ public class PessoaFisicaResource implements Resource<NewPessoaFisicaDTO, Long> 
 
         var p = NewPessoaFisicaDTO.of( pessoa );
 
-        PessoaFisica persist = service.persist( NewPessoaFisicaDTO.of( pessoa ) );
+        PessoaFisica persist = service.persist( p);
 
         //https://docs.oracle.com/middleware/1213/wls/RESTF/develop-restful-service.htm#RESTF238
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();

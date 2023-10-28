@@ -37,8 +37,6 @@ public class JwTokenHelper {
 
         Map<String, Object> claim = new LinkedHashMap<>();
         claim.put("authorities", usuario.getAuthorities());
-        claim.put("pessoa", usuario.getPessoa().getNome());
-
 
         return Jwts.builder()
                 .setSubject(usuario.getUsername() )

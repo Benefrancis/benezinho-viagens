@@ -48,8 +48,11 @@ public class PessoaJuridicaResource implements Resource<NewPessoaJuridicaDTO, Lo
 
     @POST
     @Override
-    public Response persist(NewPessoaJuridicaDTO pessoa) {
-        PessoaJuridica persist = service.persist( NewPessoaJuridicaDTO.of( pessoa ) );
+    public Response persist(NewPessoaJuridicaDTO p) {
+
+        var pessoa = NewPessoaJuridicaDTO.of( p );
+
+        PessoaJuridica persist = service.persist( pessoa );
 
         //https://docs.oracle.com/middleware/1213/wls/RESTF/develop-restful-service.htm#RESTF238
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();

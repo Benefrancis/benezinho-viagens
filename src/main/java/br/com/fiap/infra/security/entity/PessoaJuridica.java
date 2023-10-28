@@ -32,7 +32,6 @@ public class PessoaJuridica extends Pessoa {
         return this;
     }
 
-
     @Override
     public String toString() {
         return "PessoaJuridica{" +

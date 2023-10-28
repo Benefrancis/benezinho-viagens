@@ -33,7 +33,6 @@ public class PessoaFisica extends Pessoa { //
         this.sexo = sexo;
     }
 
-
     public String getCpf() {
         return cpf;
     }
@@ -42,7 +41,6 @@ public class PessoaFisica extends Pessoa { //
         this.cpf = cpf;
         return this;
     }
-
 
     public Sexo getSexo() {
         return sexo;

@@ -27,9 +27,20 @@ public  class Pessoa {
     @Column(name = "EMAIL")
     private String email;
 
-    @Transient
-    @Column(name = "PASSWORD", insertable = false)
-    private String password;
+
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinColumn(name = "USUARIO",
+            referencedColumnName = "ID_USUARIO",
+            foreignKey = @ForeignKey(name = "FK_TB_PESSOA_USUARIO")
+    )
+    private Usuario usuario;
+
+//    @Transient
+//    @Column(name = "PASSWORD", insertable = false)
+//    private String password;
 
     protected Pessoa() {
     }
@@ -39,7 +50,7 @@ public  class Pessoa {
         this.nome = nome;
         this.nascimento = nascimento;
         this.email = email;
-        this.password = password;
+//        this.password = password;
     }
 
     public Long getId() {
@@ -78,13 +89,23 @@ public  class Pessoa {
         return this;
     }
 
-    public Pessoa setPassword(String password) {
-        this.password = password;
-        return this;
+//    public Pessoa setPassword(String password) {
+//        this.password = password;
+//        return this;
+//    }
+//
+//    public String getPassword() {
+//        return this.password;
+//    }
+
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public String getPassword() {
-        return this.password;
+    public Pessoa setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        return this;
     }
 
     @Override

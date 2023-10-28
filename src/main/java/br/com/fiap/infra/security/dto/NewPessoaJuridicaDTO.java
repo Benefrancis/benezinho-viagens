@@ -1,7 +1,9 @@
 package br.com.fiap.infra.security.dto;
 
 import br.com.fiap.Main;
+import br.com.fiap.infra.configuration.criptografia.Password;
 import br.com.fiap.infra.security.entity.PessoaJuridica;
+import br.com.fiap.infra.security.entity.Usuario;
 import br.com.fiap.infra.security.service.PessoaJuridicaService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -39,8 +41,14 @@ public record NewPessoaJuridicaDTO(
         pessoa.setCnpj( p.cnpj );
         pessoa.setNome( p.nome );
         pessoa.setNascimento( p.nascimento );
-        pessoa.setPassword( p.credenciais.password() );
         pessoa.setEmail( p.email );
+       // pessoa.setPassword( p.credenciais.password() );
+        if(Objects.nonNull( p.credenciais ) ){
+            Usuario usuario = new Usuario();
+            usuario.setUsername( p.credenciais.username() ).setPassword( Password.encoder(  p.credenciais.password()) );
+            pessoa.setUsuario( usuario );
+        }
+
         return pessoa;
     }
 }

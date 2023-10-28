@@ -57,23 +57,15 @@ public class PessoaJuridicaRepository implements Repository<PessoaJuridica, Long
     @Override
     public PessoaJuridica persist(PessoaJuridica pessoa) {
         manager.getTransaction().begin();
-
-        Usuario usuario = new Usuario();
-        usuario.setUsername( pessoa.getEmail() );
-        usuario.setPassword( Password.encoder( pessoa.getPassword() ) );
-        usuario.setPessoa( pessoa );
-
         List<Authority> authorities = authorityRepository.findByName( "cliente" );
-
         if (authorities.size() == 0) {
             Authority cli = new Authority();
             cli.setNome( "cliente" );
             authorities.add( cli );
         }
-        authorities.forEach( usuario::addAuthority );
-        usuario = manager.merge( usuario );
+        authorities.forEach( pessoa.getUsuario()::addAuthority );
+        pessoa = manager.merge( pessoa );
         manager.getTransaction().commit();
-        pessoa.setId( usuario.getPessoa().getId() );
         return pessoa;
     }
 }
