@@ -18,18 +18,18 @@ import java.net.URI;
 import java.util.Objects;
 
 @Path("/produto")
-public class ProdutoResource implements Resource<Produto, Long> {
+public class ProdutoResource implements Resource<ProdutoDTO, Long> {
 
     @Context
     private UriInfo uriInfo;
 
-    ProdutoService service = ProdutoService.build(Main.PERSISTENCE_UNIT);
+    ProdutoService service = ProdutoService.build( Main.PERSISTENCE_UNIT );
 
 
     @GET
     @Override
     public Response findAll() {
-        return Response.ok(service.findAll().stream().map(ProdutoDTO::of).toList()).build();
+        return Response.ok( service.findAll().stream().map( ProdutoDTO::of ).toList() ).build();
     }
 
 
@@ -38,26 +38,29 @@ public class ProdutoResource implements Resource<Produto, Long> {
     @Override
     public Response findById(@PathParam("id") Long id) {
 
-        Produto produto = service.findById(id);
+        Produto produto = service.findById( id );
 
-        if (Objects.isNull(produto)) return Response.status(404).build();
+        if (Objects.isNull( produto )) return Response.status( 404 ).build();
 
-        return Response.ok(ProdutoDTO.of(produto)).build();
+        return Response.ok( ProdutoDTO.of( produto ) ).build();
 
 
     }
 
     @POST
     @Override
-    public Response persist(Produto produto) {
-        Produto persisted = service.persist(produto);
+    public Response persist(ProdutoDTO p) {
 
-        if (Objects.isNull(persisted)) return Response.status(400).build();
+        var produto = ProdutoDTO.of( p );
+
+        Produto persisted = service.persist( produto );
+
+        if (Objects.isNull( persisted )) return Response.status( 400 ).build();
 
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-        URI uri = ub.path(String.valueOf(persisted.getId())).build();
+        URI uri = ub.path( String.valueOf( persisted.getId() ) ).build();
 
-        return Response.created(uri).entity(ProdutoDTO.of(persisted)).build();
+        return Response.created( uri ).entity( ProdutoDTO.of( persisted ) ).build();
     }
 
 }

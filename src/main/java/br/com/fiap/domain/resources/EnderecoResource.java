@@ -27,7 +27,7 @@ public class EnderecoResource {
     public Response findByCEP(@PathParam("cep") String cep) {
         Endereco endereco = service.findByCEP( cep );
         if (Objects.isNull( endereco )) return Response.status( 404 ).build();
-        return Response.ok( endereco ).build();
+        return Response.ok( EnderecoDTO.of( endereco ) ).build();
     }
 
     @GET
@@ -39,20 +39,22 @@ public class EnderecoResource {
 
         List<Endereco> enderecos = service.findByLogradouro( uf, cidade, logradouro );
         if (Objects.isNull( enderecos )) return Response.status( 404 ).build();
-        return Response.ok( enderecos ).build();
+
+        var enderecosDto = enderecos.stream().map( EnderecoDTO::of ).toList();
+
+        return Response.ok( enderecosDto ).build();
     }
 
 
     @POST
     public Response persist(EnderecoDTO dto) {
 
-        var endereco = EnderecoDTO.of(dto);
+        var endereco = EnderecoDTO.of( dto );
 
         Endereco persisted = service.persist( endereco );
 
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
         URI uri = ub.path( String.valueOf( persisted.getCep() ) ).build();
-
 
         if (Objects.isNull( persisted )) return Response.status( 400 ).build();
         return Response.created( uri ).entity( EnderecoDTO.of( persisted ) ).build();

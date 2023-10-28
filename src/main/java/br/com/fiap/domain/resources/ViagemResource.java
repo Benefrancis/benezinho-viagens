@@ -23,13 +23,19 @@ public class ViagemResource implements Resource<ViagemDTO, Long> {
     @Context
     private UriInfo uriInfo;
 
-    private ViagemService service = ViagemService.build(Main.PERSISTENCE_UNIT);
+    private ViagemService service = ViagemService.build( Main.PERSISTENCE_UNIT );
 
 
     @GET
     @Override
     public Response findAll() {
-        return Response.ok( service.findAll().stream().map(ViagemDTO::of).toList()).build();
+
+        var viagens = service.findAll()
+                .stream()
+                .map( ViagemDTO::of )
+                .toList();
+
+        return Response.ok( viagens ).build();
     }
 
 
@@ -38,11 +44,11 @@ public class ViagemResource implements Resource<ViagemDTO, Long> {
     @Override
     public Response findById(@PathParam("id") Long id) {
 
-        Viagem viagem = service.findById(id);
+        Viagem viagem = service.findById( id );
 
-        if (Objects.isNull(viagem)) return Response.status(404).build();
+        if (Objects.isNull( viagem )) return Response.status( 404 ).build();
 
-        return Response.ok(viagem).build();
+        return Response.ok( ViagemDTO.of( viagem ) ).build();
 
     }
 
@@ -50,16 +56,16 @@ public class ViagemResource implements Resource<ViagemDTO, Long> {
     @Override
     public Response persist(ViagemDTO v) {
 
-        var viagem = ViagemDTO.of(v);
+        var viagem = ViagemDTO.of( v );
 
-        Viagem persisted = service.persist(viagem);
+        Viagem persisted = service.persist( viagem );
 
-        if (Objects.isNull(persisted)) return Response.status(400).build();
+        if (Objects.isNull( persisted )) return Response.status( 400 ).build();
 
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-        URI uri = ub.path(String.valueOf(persisted.getId())).build();
+        URI uri = ub.path( String.valueOf( persisted.getId() ) ).build();
 
-        return Response.created(uri).entity(ViagemDTO.of(persisted)).build();
+        return Response.created( uri ).entity( ViagemDTO.of( persisted ) ).build();
     }
 
 }

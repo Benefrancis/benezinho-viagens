@@ -28,7 +28,8 @@ public class PassageiroResource implements Resource<PassageiroDTO, Long> {
     @GET
     @Override
     public Response findAll() {
-        return Response.ok(  service.findAll().stream().map(PassageiroDTO::of).toList() ).build();
+        var passageiros = service.findAll().stream().map( PassageiroDTO::of ).toList();
+        return Response.ok( passageiros ).build();
     }
 
     @GET
@@ -42,14 +43,13 @@ public class PassageiroResource implements Resource<PassageiroDTO, Long> {
 
         return Response.ok( PassageiroDTO.of( passageiro ) ).build();
 
-
     }
 
     @POST
     @Override
     public Response persist(PassageiroDTO passageiro) {
 
-       var p = PassageiroDTO.of( passageiro );
+        var p = PassageiroDTO.of( passageiro );
 
         Passageiro persisted = service.persist( p );
 

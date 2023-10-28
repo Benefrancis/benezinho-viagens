@@ -5,7 +5,15 @@ import br.com.fiap.domain.entity.Endereco;
 import br.com.fiap.domain.service.EnderecoService;
 import br.com.fiap.infra.security.dto.PessoaDTO;
 
-public record EnderecoDTO(PessoaDTO pessoa, String cep, String numero, String complemento) {
+import java.util.Objects;
+
+public record EnderecoDTO(
+        PessoaDTO pessoa,
+        String cep,
+        String numero,
+        String complemento,
+        String logradouro
+        ) {
 
     static EnderecoService service = EnderecoService.build( Main.PERSISTENCE_UNIT );
 
@@ -18,8 +26,14 @@ public record EnderecoDTO(PessoaDTO pessoa, String cep, String numero, String co
     }
 
     public static EnderecoDTO of(Endereco e) {
-        var pessoa = PessoaDTO.of( e.getPessoa() );
-        return new EnderecoDTO( pessoa, e.getCep(), e.getNumero(), e.getComplemento() );
+
+        if(Objects.isNull( e )) return null;
+        PessoaDTO pessoa = null;
+        if(Objects.nonNull( e.getPessoa() ) && Objects.nonNull( e.getPessoa().getId())){
+              pessoa = PessoaDTO.of( e.getPessoa() );
+        }
+
+        return new EnderecoDTO( pessoa, e.getCep(), e.getNumero(), e.getComplemento(), e.getLogradouro() );
     }
 
 }

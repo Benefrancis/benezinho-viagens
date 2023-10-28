@@ -3,6 +3,7 @@ package br.com.fiap.domain.dto;
 import br.com.fiap.Main;
 import br.com.fiap.domain.entity.transportavel.Produto;
 import br.com.fiap.domain.service.ProdutoService;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -19,8 +20,13 @@ public record ProdutoDTO(
     private static ProdutoService service = ProdutoService.build(Main.PERSISTENCE_UNIT);
 
     public static Produto of(ProdutoDTO dto) {
+
+        // É nulo?
         if (Objects.isNull(dto)) return null;
+
+        //Ele informou o id do produto?
         if (Objects.nonNull(dto.id)) return service.findById(dto.id);
+
         Produto p = new Produto();
         p.setNome(dto.nome);
         p.setAltura(dto.altura);
