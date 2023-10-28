@@ -42,7 +42,7 @@ public record NewPessoaJuridicaDTO(
         pessoa.setNome( p.nome );
         pessoa.setNascimento( p.nascimento );
         pessoa.setEmail( p.email );
-       // pessoa.setPassword( p.credenciais.password() );
+
         if(Objects.nonNull( p.credenciais ) ){
             Usuario usuario = new Usuario();
             usuario.setUsername( p.credenciais.username() ).setPassword( Password.encoder(  p.credenciais.password()) );

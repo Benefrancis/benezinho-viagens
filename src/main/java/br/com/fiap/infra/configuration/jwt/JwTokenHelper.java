@@ -36,12 +36,12 @@ public class JwTokenHelper {
     public String generatePrivateKey(Usuario usuario) {
 
         Map<String, Object> claim = new LinkedHashMap<>();
-        claim.put("authorities", usuario.getAuthorities());
+        claim.put( "authorities", usuario.getAuthorities() );
 
         return Jwts.builder()
-                .setSubject(usuario.getUsername() )
-                .setSubject(usuario.getPassword() )
-                .setClaims(claim)
+                .setSubject( usuario.getUsername() )
+                .setSubject( usuario.getPassword() )
+                .setClaims( claim )
                 .setExpiration( getExpirationDate() )
                 .signWith( key )
                 .compact();

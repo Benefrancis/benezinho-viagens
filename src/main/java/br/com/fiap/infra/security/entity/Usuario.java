@@ -27,16 +27,6 @@ public class Usuario {
     @Column(name = "USER_PASSWORD", nullable = false)
     private String password;
 
-//    @OneToOne(
-//            fetch = FetchType.EAGER,
-//            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-//    )
-//    @JoinColumn(name = "PESSOA",
-//            referencedColumnName = "ID_PESSOA",
-//            foreignKey = @ForeignKey(name = "FK_USER_PESSOA")
-//    )
-//    private Pessoa pessoa;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(name = "TB_AUTHORITY_USUARIO",
             joinColumns = {@JoinColumn(name = "USUARIO", referencedColumnName = "ID_USUARIO", foreignKey = @ForeignKey(name = "FK_AUTHORIRY_USER"))},
@@ -54,13 +44,10 @@ public class Usuario {
 
     }
 
-    public Usuario(Long id, String username, String password,
-                   //Pessoa pessoa,
-                   Set<Authority> authorities) {
+    public Usuario(Long id, String username, String password, Set<Authority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
-//        this.pessoa = pessoa;
         this.authorities = Objects.nonNull( authorities ) ? authorities : new LinkedHashSet<>();
     }
 
@@ -91,14 +78,6 @@ public class Usuario {
         return this;
     }
 
-//    public Pessoa getPessoa() {
-//        return pessoa;
-//    }
-//
-//    public Usuario setPessoa(Pessoa pessoa) {
-//        this.pessoa = pessoa;
-//        return this;
-//    }
 
     public Set<Authority> getAuthorities() {
         return Collections.unmodifiableSet( authorities );

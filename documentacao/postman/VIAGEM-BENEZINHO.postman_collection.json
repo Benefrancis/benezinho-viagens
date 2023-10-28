@@ -11,6 +11,19 @@
 			"item": [
 				{
 					"name": "PF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -139,87 +152,6 @@
 									"});\r",
 									"\r",
 									"\r",
-									"pm.test(\"Response is an array\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"\r",
-									"  pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response array is empty\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"    pm.expect(responseData).to.have.lengthOf(0);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response time is less than 500ms\", function () {\r",
-									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Validate the structure of the response\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Validate the structure of the response\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"    responseData.forEach(function(item) {\r",
-									"        pm.expect(item).to.be.an('object');\r",
-									"        pm.expect(item.id).to.exist.and.to.be.a('string');\r",
-									"        pm.expect(item.name).to.exist.and.to.be.a('string');\r",
-									"        pm.expect(item.date).to.exist.and.to.be.a('string');\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the response array is not null or undefined\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.not.be.null;\r",
-									"    pm.expect(responseData).to.not.be.undefined;\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the response array contains only objects\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"    \r",
-									"    responseData.forEach(function(item) {\r",
-									"        pm.expect(item).to.be.an('object');\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the response array does not contain any duplicate items\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"    \r",
-									"    const uniqueItems = new Set(responseData);\r",
-									"    pm.expect(uniqueItems.size).to.equal(responseData.length, \"Array contains duplicate items\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the response array is sorted in ascending order by id\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array');\r",
-									"    \r",
-									"    if (responseData.length > 1) {\r",
-									"        for (let i = 0; i < responseData.length - 1; i++) {\r",
-									"            pm.expect(responseData[i].id).to.be.at.most(responseData[i + 1].id);\r",
-									"        }\r",
-									"    }\r",
-									"});\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -268,73 +200,6 @@
 									"\r",
 									"pm.test(\"Response status code is 200\", function () {\r",
 									"  pm.expect(pm.response.code).to.equal(200);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body is an array\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData).to.be.an('array');\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response body is empty\", function () {\r",
-									"    const responseData = pm.response.json();\r",
-									"    \r",
-									"    pm.expect(responseData).to.be.an('array').that.is.empty;\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify response headers\", function () {\r",
-									"    pm.response.headers.each(function (header) {\r",
-									"        switch (header.key) {\r",
-									"            case \"Content-Type\":\r",
-									"                pm.expect(header.value).to.include(\"application/json\");\r",
-									"                break;\r",
-									"            case \"Access-Control-Allow-Origin\":\r",
-									"                pm.expect(header.value).to.include(\"*\");\r",
-									"                break;\r",
-									"            case \"Cache-Control\":\r",
-									"                pm.expect(header.value).to.include(\"no-cache, no-store, must-revalidate\");\r",
-									"                break;\r",
-									"            // Add more cases for other expected headers if needed\r",
-									"        }\r",
-									"    });\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify the response body length is 0\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData).to.be.an('array').and.to.have.lengthOf(0);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the 'Content-Type' header is present and has the value 'application/json'\", function () {\r",
-									"    pm.expect(pm.response.headers.get('Content-Type')).to.equal('application/json');\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify Access-Control-Allow-Origin header\", function () {\r",
-									"  pm.expect(pm.response.headers.has(\"Access-Control-Allow-Origin\")).to.be.true;\r",
-									"  pm.expect(pm.response.headers.get(\"Access-Control-Allow-Origin\")).to.equal(\"*\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the Cache-Control header is present and has the value 'no-cache, no-store, must-revalidate'\", function () {\r",
-									"    pm.response.headers.has(\"Cache-Control\");\r",
-									"    pm.expect(pm.response.headers.get(\"Cache-Control\")).to.equal(\"no-cache, no-store, must-revalidate\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Verify that the 'Content-Length' header is present and has the value 0\", function () {\r",
-									"    pm.expect(pm.response.headers.has('Content-Length')).to.be.true;\r",
-									"    pm.expect(pm.response.headers.get('Content-Length')).to.equal('0');\r",
 									"});\r",
 									"\r",
 									""
@@ -441,7 +306,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Benezinho Bank SA\",\r\n    \"nascimento\": \"2000-03-08\",\r\n    \"cnpj\": \"010238728900164\",\r\n    \"credenciais\": {\r\n        \"username\":  \"bank@benezinho.com\",\r\n        \"password\": \"123456\"\r\n    },\r\n    \"email\": \"bank@benezinho.com\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"Benezinho Bank SA\",\r\n    \"nascimento\": \"2000-03-08\",\r\n    \"cnpj\": \"0102389728900164\",\r\n    \"credenciais\": {\r\n        \"username\":  \"bank@benezinho.com\",\r\n        \"password\": \"123456\"\r\n    },\r\n    \"email\": \"bank@benezinho.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -682,7 +547,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "   {\r\n          \"tipo\": \"PRODUTO\",\r\n        \"altura\": 1.5,\r\n        \"etiqueta\": \"12132\",\r\n        \"largura\": 0.5,\r\n        \"nome\": \"Tablet\",\r\n        \"peso\": 300.0,\r\n        \"profundidade\": 1.0\r\n    }",
+							"raw": "   {\r\n        \"tipo\": \"PRODUTO\",\r\n        \"altura\": 1.5,\r\n        \"etiqueta\": \"12132\",\r\n        \"largura\": 0.5,\r\n        \"nome\": \"Tablet\",\r\n        \"peso\": 300.0,\r\n        \"profundidade\": 1.0\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -723,34 +588,6 @@
 					"response": []
 				},
 				{
-					"name": "PASSAGEIRO-BENEFRANCIS",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tipo\": \"PASSAGEIRO\",\r\n    \"pessoa\": {\r\n        \"id\": 1\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost/api/passageiro",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"api",
-								"passageiro"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "IPHONE",
 					"request": {
 						"method": "POST",
@@ -773,6 +610,34 @@
 							"path": [
 								"api",
 								"produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PASSAGEIRO-BENEFRANCIS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipo\": \"PASSAGEIRO\",\r\n    \"pessoa\": {\r\n        \"id\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/passageiro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"passageiro"
 							]
 						}
 					},

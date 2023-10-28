@@ -1,9 +1,7 @@
 package br.com.fiap.infra.security.repository;
 
-import br.com.fiap.infra.configuration.criptografia.Password;
 import br.com.fiap.infra.security.entity.Authority;
 import br.com.fiap.infra.security.entity.PessoaFisica;
-import br.com.fiap.infra.security.entity.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 

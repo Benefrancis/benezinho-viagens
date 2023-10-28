@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Table(name = "TB_PESSOA")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "TP_PESSOA")
-public  class Pessoa {
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_PESSOA")
@@ -27,7 +27,6 @@ public  class Pessoa {
     @Column(name = "EMAIL")
     private String email;
 
-
     @OneToOne(
             fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
@@ -38,19 +37,15 @@ public  class Pessoa {
     )
     private Usuario usuario;
 
-//    @Transient
-//    @Column(name = "PASSWORD", insertable = false)
-//    private String password;
 
     protected Pessoa() {
     }
 
-    protected Pessoa(Long id, String nome, LocalDate nascimento, String email, String password) {
+    protected Pessoa(Long id, String nome, LocalDate nascimento, String email) {
         this.id = id;
         this.nome = nome;
         this.nascimento = nascimento;
         this.email = email;
-//        this.password = password;
     }
 
     public Long getId() {
@@ -88,16 +83,6 @@ public  class Pessoa {
         this.nascimento = nascimento;
         return this;
     }
-
-//    public Pessoa setPassword(String password) {
-//        this.password = password;
-//        return this;
-//    }
-//
-//    public String getPassword() {
-//        return this.password;
-//    }
-
 
     public Usuario getUsuario() {
         return usuario;

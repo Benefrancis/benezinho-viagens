@@ -15,7 +15,6 @@ import java.util.Set;
  *
  * @param id
  * @param username
- * @param pessoa
  * @param authorization
  * @param authorities
  */

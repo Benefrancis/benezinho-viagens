@@ -13,7 +13,7 @@ public record EnderecoDTO(
         String numero,
         String complemento,
         String logradouro
-        ) {
+) {
 
     static EnderecoService service = EnderecoService.build( Main.PERSISTENCE_UNIT );
 
@@ -27,10 +27,10 @@ public record EnderecoDTO(
 
     public static EnderecoDTO of(Endereco e) {
 
-        if(Objects.isNull( e )) return null;
+        if (Objects.isNull( e )) return null;
         PessoaDTO pessoa = null;
-        if(Objects.nonNull( e.getPessoa() ) && Objects.nonNull( e.getPessoa().getId())){
-              pessoa = PessoaDTO.of( e.getPessoa() );
+        if (Objects.nonNull( e.getPessoa() ) && Objects.nonNull( e.getPessoa().getId() )) {
+            pessoa = PessoaDTO.of( e.getPessoa() );
         }
 
         return new EnderecoDTO( pessoa, e.getCep(), e.getNumero(), e.getComplemento(), e.getLogradouro() );
